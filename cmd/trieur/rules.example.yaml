@@ -1,0 +1,22 @@
+# Règles du trieur Twalk v2. Copier vers $HERMES_HOME/secrets/twalk2/rules.yaml (0600)
+# ou pointer TWALK_RULES dessus. Fichier absent = règles par défaut (mots-clés ci-dessous, rien d'autre).
+#
+# Ordre d'application (la première règle qui s'applique gagne) :
+#   1. conversation dans `muted`                          -> noise
+#   2. conversation directe (dm) d'un expéditeur `vip`    -> urgent   (un vip dans un groupe n'est PAS urgent)
+#   3. mot-clé de `urgent_keywords`                       -> urgent
+#      mot-clé de `reply_keywords`                        -> reply
+#   4. groupe: mention de toi, ou réponse à un de tes messages -> reply
+#   5. dm d'un contact connu -> reply, dm d'un inconnu -> info; le LLM (s'il est configuré) affine ces deux cas
+#   6. groupe/canal sans mention ni mot-clé               -> info (sans LLM); média seul sans texte -> noise
+# Un `reply` devient `info` (« déjà répondu ») si tu as écrit dans la conversation après le message.
+#
+# Les comparaisons ignorent la casse et les accents. Les mots-clés sont des mots entiers
+# (« urgent » ne matche pas « urgentiste »; un « s » final est toléré) ; une expression est possible.
+
+muted:            # id de conversation (« whatsapp:1203…@g.us ») ou nom exact
+  - "Annonces copropriété"
+vip:              # nom exact ou id d'expéditeur (« telegram:123456 »)
+  - "Gilles LEHOUX"
+urgent_keywords: [urgent, urgence, asap, incident, en panne, critique, signature]
+reply_keywords: [peux-tu, pouvez-vous, tu peux, ton avis, votre avis, merci de confirmer]

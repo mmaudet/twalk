@@ -19,7 +19,7 @@ PORT, MONITOR_PORT = 4250, 8250
 
 NETWORKS = ["whatsapp", "telegram", "signal", "mattermost", "matrix"]
 # Lecture d'un consommateur JetStream : API consommateur, info du stream, acks.
-CONSUME = ["$JS.API.INFO", "$JS.API.STREAM.INFO.twalk2", "$JS.API.CONSUMER.>", "$JS.ACK.twalk2.>"]
+CONSUME = ["$JS.API.INFO", "$JS.API.STREAM.INFO.twalk2", "$JS.API.CONSUMER.>", "$JS.ACK.twalk2.>", "$JS.API.DIRECT.GET.twalk2.>", "$JS.API.STREAM.MSG.GET.twalk2"]
 
 
 def collector(net):

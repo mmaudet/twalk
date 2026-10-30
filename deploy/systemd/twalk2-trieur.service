@@ -1,0 +1,15 @@
+[Unit]
+Description=Twalk v2 : trieur (règles + LLM AI Gateway)
+After=network-online.target twalk2-nats.service
+Wants=twalk2-nats.service
+
+[Service]
+EnvironmentFile=%h/hermes-new/secrets/twalk2/trieur.env
+Environment=TWALK_RULES=%h/hermes-new/secrets/twalk2/rules.yaml
+Environment=TWALK_LLM_KEY_FILE=%h/hermes-new/secrets/twalk2/gateway-key
+ExecStart=%h/work/twalk2/bin/trieur run
+Restart=on-failure
+RestartSec=10
+
+[Install]
+WantedBy=default.target
