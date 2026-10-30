@@ -16,7 +16,8 @@ const NETS = {
   signal: 'Signal',
   mattermost: 'Mattermost',
   matrix: 'Matrix',
-  sms: 'SMS'
+  sms: 'SMS',
+  linkedin: 'LinkedIn'
 }
 
 const LABELS = {

@@ -52,7 +52,7 @@ type FeedMessage struct {
 	Replied       bool      `json:"replied"`
 }
 
-var feedNetworks = []string{event.WhatsApp, event.Telegram, event.Signal, event.Mattermost, event.Matrix, event.SMS}
+var feedNetworks = []string{event.WhatsApp, event.Telegram, event.Signal, event.Mattermost, event.Matrix, event.SMS, event.LinkedIn}
 
 // BuildFeed joins messages with their triage, newest first, capped at limit.
 func BuildFeed(evs []inEnvelope, since time.Time, limit int) *Feed {
