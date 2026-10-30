@@ -1,0 +1,8 @@
+name: twalk-control
+label: Twalk · tour de contrôle
+version: 0.1.0
+author: Hermes pour Michel-Marie MAUDET
+description: >
+  Tour de contrôle Twalk : volet du bureau Hermes qui affiche en direct les messages
+  collectés par Twalk (WhatsApp, Telegram, Signal, Mattermost, Matrix, SMS) et leur tri.
+  Lecture seule ; le backend lit le bus NATS local via `trieur feed`.

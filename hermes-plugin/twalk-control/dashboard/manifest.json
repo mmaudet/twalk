@@ -1,0 +1,9 @@
+{
+  "name": "twalk-control",
+  "label": "Twalk",
+  "description": "Tour de contrôle Twalk : messages collectés (WhatsApp, Telegram, Signal, Mattermost, Matrix, SMS) et leur tri, en lecture seule.",
+  "icon": "RadioTower",
+  "version": "0.1.0",
+  "tab": { "hidden": true },
+  "api": "plugin_api.py"
+}

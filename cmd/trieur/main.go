@@ -26,6 +26,7 @@ const usage = `trieur: classement des messages du bus Twalk v2.
 
   trieur run                                  démon: étiquette les messages reçus (triage.labeled)
   trieur digest [--since 24h] [--format md|json] [--account hermes]   analyse du bus, lecture seule
+  trieur feed [--since 12h] [--limit 150] [--account hermes]          flux JSON pour la tour de contrôle (lecture seule)
 
 Environnement: NATS_URL, NATS_USER, NATS_PASSWORD (sinon $HERMES_HOME/secrets/twalk2/<compte>.env),
 TWALK_RULES (rules.yaml, voir rules.example.yaml), TWALK_LLM_URL, TWALK_LLM_KEY_FILE (absent = pas
@@ -52,6 +53,8 @@ func realMain() int {
 		err = runDaemon(ctx, log)
 	case "digest":
 		err = runDigest(ctx, os.Args[2:])
+	case "feed":
+		err = runFeed(ctx, os.Args[2:])
 	default:
 		fmt.Fprint(os.Stderr, usage)
 		return 1
