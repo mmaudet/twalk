@@ -1,0 +1,18 @@
+[Unit]
+Description=Twalk v2 : collecteur %i (lecture seule)
+After=network-online.target twalk2-nats.service
+Wants=twalk2-nats.service
+
+[Service]
+EnvironmentFile=%h/hermes-new/secrets/twalk2/collector-%i.env
+EnvironmentFile=-%h/hermes-new/secrets/twalk2/%i.env
+Environment=TWALK_EXCLUDE=%h/hermes-new/secrets/twalk2/exclude.yaml
+Environment=TWALK_STATE_DIR=%h/hermes-new/secrets/twalk2/%i
+ExecStart=%h/work/twalk2/bin/collector-%i run
+Restart=on-failure
+RestartSec=10
+# Code 2 = session absente ou expirée : on n'insiste pas, il faut réappairer.
+RestartPreventExitStatus=2
+
+[Install]
+WantedBy=default.target

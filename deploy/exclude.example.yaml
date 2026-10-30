@@ -1,0 +1,6 @@
+# Exclusions Twalk v2 : ce qui est listé ici n'est JAMAIS publié sur le bus.
+# Copier vers $HERMES_HOME/secrets/twalk2/exclude.yaml (0600). Fichier absent = aucune exclusion.
+
+networks: []          # ex. [signal]
+conversations: []     # id (« whatsapp:1203…@g.us ») ou nom exact de la conversation
+senders: []           # id d'expéditeur (« telegram:123456 », « whatsapp:33611111111 »)
