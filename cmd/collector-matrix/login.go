@@ -9,6 +9,7 @@ import (
 	"encoding/json"
 	"errors"
 	"fmt"
+	"net/url"
 	"os"
 	"path/filepath"
 	"strings"
@@ -175,7 +176,31 @@ func login(ctx context.Context, dir string) error {
 	if err != nil {
 		return fmt.Errorf("flux de connexion: %w", err)
 	}
-	if flows.HasFlow(mautrix.AuthTypePassword) {
+	if flows.HasFlow(mautrix.AuthTypeSSO) && flows.HasFlow(mautrix.AuthTypeToken) {
+		// SSO (LINAGORA: sso.linagora.com): the browser does the SSO login, then
+		// Synapse redirects to redirectUrl?loginToken=…; the owner pastes that URL
+		// here and we exchange the short-lived token for a NEW device of our own,
+		// so end-to-end encryption works.
+		redirect := "http://localhost:1/twalk-sso"
+		u := strings.TrimRight(cli.HomeserverURL.String(), "/") + "/_matrix/client/v3/login/sso/redirect?redirectUrl=" + url.QueryEscape(redirect)
+		fmt.Println("\n1. Ouvre cette adresse dans ton navigateur et connecte-toi (SSO) :\n\n   " + u)
+		fmt.Println("\n2. Le navigateur finit sur une page en erreur « localhost » : c'est normal.\n   Copie l'adresse complète de cette page (elle contient loginToken=…) et colle-la ici.")
+		raw := secret("\nAdresse de retour (saisie masquée) : ")
+		tok := raw
+		if pu, err := url.Parse(raw); err == nil && pu.Query().Get("loginToken") != "" {
+			tok = pu.Query().Get("loginToken")
+		}
+		if tok == "" {
+			return errors.New("loginToken absent de l'adresse collée")
+		}
+		_, err = cli.Login(ctx, &mautrix.ReqLogin{
+			Type: mautrix.AuthTypeToken, Token: tok,
+			InitialDeviceDisplayName: deviceDisplay, StoreCredentials: true,
+		})
+		if err != nil {
+			return fmt.Errorf("connexion SSO refusée: %w", err)
+		}
+	} else if flows.HasFlow(mautrix.AuthTypePassword) {
 		pw := secret("Mot de passe (saisie masquée) : ")
 		_, err = cli.Login(ctx, &mautrix.ReqLogin{
 			Type: mautrix.AuthTypePassword, Identifier: mautrix.UserIdentifier{Type: mautrix.IdentifierTypeUser, User: string(user)},

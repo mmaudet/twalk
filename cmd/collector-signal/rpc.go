@@ -58,7 +58,7 @@ func (c *rpcClient) call(ctx context.Context, method string, out any) error {
 	if _, err := c.w.Write(append(b, '\n')); err != nil {
 		return err
 	}
-	ctx, cancel := context.WithTimeout(ctx, 30*time.Second)
+	ctx, cancel := context.WithTimeout(ctx, 3*time.Minute) // listGroups takes ~30 s with ~500 groups
 	defer cancel()
 	for {
 		select {

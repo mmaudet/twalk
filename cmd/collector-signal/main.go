@@ -237,10 +237,12 @@ func (c *collector) session(ctx context.Context, w io.Writer, r io.Reader, accou
 	}()
 	go func() { // connected once signal-cli answers a local read
 		for sctx.Err() == nil {
-			if err := c.names.refresh(sctx); err == nil {
+			err := c.names.refresh(sctx)
+			if err == nil {
 				c.set(ctx, event.StateConnected, "")
 				return
 			}
+			c.log.Warn("signal-cli ne répond pas encore", "err", err)
 			select {
 			case <-sctx.Done():
 			case <-time.After(10 * time.Second):
