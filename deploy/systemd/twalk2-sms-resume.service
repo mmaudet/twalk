@@ -1,0 +1,6 @@
+[Unit]
+Description=Twalk v2 : reprise nocturne de la session Messages Web (collecteur SMS)
+
+[Service]
+Type=oneshot
+ExecStart=%h/work/twalk2/deploy/systemd/sms-resume.sh
