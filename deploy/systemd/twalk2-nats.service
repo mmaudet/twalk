@@ -1,0 +1,12 @@
+[Unit]
+Description=Twalk v2 : NATS JetStream local (loopback)
+After=network.target
+
+[Service]
+ExecStart=%h/.local/bin/nats-server -c %h/hermes-new/secrets/twalk2/nats.conf
+Restart=on-failure
+RestartSec=5
+LimitNOFILE=65536
+
+[Install]
+WantedBy=default.target

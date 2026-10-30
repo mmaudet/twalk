@@ -1,0 +1,4 @@
+*.env
+secrets/
+*.session
+bin/

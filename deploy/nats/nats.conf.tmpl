@@ -1,0 +1,14 @@
+# Twalk v2 : serveur NATS local (Athena). Rendu par deploy/nats/setup.py.
+# Écoute en loopback uniquement. Les mots de passe vivent dans users.conf (0600), hors dépôt.
+
+server_name: twalk2-athena
+listen: 127.0.0.1:{port}
+http: 127.0.0.1:{monitor_port}
+
+jetstream {{
+  store_dir: "{store_dir}"
+  max_file_store: 4GB
+  max_memory_store: 256MB
+}}
+
+include ./users.conf

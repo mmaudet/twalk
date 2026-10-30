@@ -1,0 +1,14 @@
+{
+  "name": "twalk2",
+  "subjects": ["twalk2.>"],
+  "retention": "limits",
+  "storage": "file",
+  "num_replicas": 1,
+  "max_age": 2592000000000000,
+  "max_bytes": 2147483648,
+  "max_msg_size": 1048576,
+  "discard": "old",
+  "duplicate_window": 86400000000000,
+  "compression": "s2",
+  "allow_direct": true
+}
