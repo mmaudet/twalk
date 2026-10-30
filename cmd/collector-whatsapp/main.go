@@ -101,7 +101,7 @@ func openStore(ctx context.Context, log *slog.Logger) (*sqlstore.Container, erro
 	f.Close()
 	// dbutil.ParseDialect accepts any "sqlite*" name; whatsmeow requires foreign
 	// keys, enabled through modernc's _pragma DSN parameter.
-	return sqlstore.New(ctx, "sqlite", "file:"+path+"?_pragma=foreign_keys(1)&_pragma=busy_timeout(10000)", slogAdapter{log})
+	return sqlstore.New(ctx, "sqlite", "file:"+path+"?_pragma=foreign_keys(1)&_pragma=busy_timeout(10000)&_pragma=journal_mode(WAL)&_txlock=immediate", slogAdapter{log})
 }
 
 // pairedDevice returns the paired device, or nil when none.
@@ -214,6 +214,7 @@ func (c *collector) handle(raw any) {
 	switch v := raw.(type) {
 	case *events.Message:
 		n, ok := normalize(v, c.dir)
+		c.log.Debug("message", "id", n.ID, "kept", ok, "chat_server", v.Info.Chat.Server)
 		var err error
 		if ok && n.Reaction != nil {
 			err = c.pub.Reaction(c.ctx, n.ID, n.Time, *n.Reaction)
