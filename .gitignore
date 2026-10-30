@@ -2,3 +2,4 @@
 secrets/
 *.session
 bin/
+__pycache__/
