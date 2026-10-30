@@ -17,6 +17,7 @@ const (
 	Signal     = "signal"
 	Mattermost = "mattermost"
 	Matrix     = "matrix"
+	SMS        = "sms" // SMS and RCS, whatever the transport (Google Messages web)
 )
 
 // Conversation kinds.
@@ -44,7 +45,7 @@ const (
 	StateStopping     = "stopping"
 )
 
-var networks = map[string]bool{WhatsApp: true, Telegram: true, Signal: true, Mattermost: true, Matrix: true}
+var networks = map[string]bool{WhatsApp: true, Telegram: true, Signal: true, Mattermost: true, Matrix: true, SMS: true}
 var kinds = map[string]bool{KindDM: true, KindGroup: true, KindChannel: true}
 
 // Envelope is a structured-mode CloudEvent 1.0 with the `network` extension.

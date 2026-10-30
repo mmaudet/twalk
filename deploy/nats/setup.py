@@ -17,7 +17,7 @@ SECRETS = Path(os.environ.get("TWALK2_SECRETS", HERMES_HOME / "secrets" / "twalk
 STORE = Path(os.environ.get("TWALK2_STORE", Path.home() / ".local/share/twalk2/jetstream"))
 PORT, MONITOR_PORT = 4250, 8250
 
-NETWORKS = ["whatsapp", "telegram", "signal", "mattermost", "matrix"]
+NETWORKS = ["whatsapp", "telegram", "signal", "mattermost", "matrix", "sms"]
 # Lecture d'un consommateur JetStream : API consommateur, info du stream, acks.
 CONSUME = ["$JS.API.INFO", "$JS.API.STREAM.INFO.twalk2", "$JS.API.CONSUMER.>", "$JS.ACK.twalk2.>", "$JS.API.DIRECT.GET.twalk2.>", "$JS.API.STREAM.MSG.GET.twalk2"]
 
