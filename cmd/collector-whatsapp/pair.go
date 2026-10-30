@@ -122,12 +122,9 @@ func pair(ctx context.Context, log *slog.Logger, args []string) int {
 			fmt.Fprintln(os.Stderr, "connexion impossible :", err)
 			return 1
 		}
-		// The server validates "Browser (OS)"; fall back if our custom name is refused.
-		code, err := cli.PairPhone(ctx, *phone, true, whatsmeow.PairClientChrome, displayName)
-		if err != nil {
-			log.Warn("custom display name refused, retrying as Chrome (Linux)", "err", err)
-			code, err = cli.PairPhone(ctx, *phone, true, whatsmeow.PairClientChrome, "Chrome (Linux)")
-		}
+		// The server only accepts a common "Browser (OS)" name, and a refused first
+		// attempt in the same session left the phone unable to link: one call only.
+		code, err := cli.PairPhone(ctx, *phone, true, whatsmeow.PairClientChrome, "Chrome (Linux)")
 		if err != nil {
 			log.Error("pair phone", "err", err)
 			return 1
